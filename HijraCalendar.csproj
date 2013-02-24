@@ -34,8 +34,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Calendar.cs" />
-    <Compile Include="dummy.cs" />
+    <Compile Include="Hijri Calendar\Calendar.cs" />
+    <Compile Include="Hijri Calendar\dummy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Hijri Calendar\" />
+  </ItemGroup>
 </Project>
