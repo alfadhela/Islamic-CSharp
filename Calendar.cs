@@ -2,7 +2,7 @@ using System;
 
 namespace org.tamrah.islamic.hijri
 {
-	public abstract class Calendar
+	public class Calendar
 	{
 		//
 		public readonly static int ERA = 0;
