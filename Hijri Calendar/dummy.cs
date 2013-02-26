@@ -5,6 +5,7 @@ namespace HijraCalendar
 {
 	public class dummy
 	{
+
 		public static void Main ()
 		{
 			Calendar calendar = Calendar.getInstance();

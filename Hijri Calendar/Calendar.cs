@@ -42,8 +42,11 @@ namespace org.tamrah.islamic.hijri
 		public readonly static int FIELD_COUNT = 17;
 
 		//Used to store Date ERA, YEAR, MONTH ..... DST_OFFSET
-		private static int[] values = new int[FIELD_COUNT];
+		private int[] values = new int[FIELD_COUNT];
 
+		//ERAs
+		public readonly static int BC = 0;
+		public readonly static int AD = 1;
 
 		//DAYS
 		public readonly static int SUNDAY = 1;
@@ -67,6 +70,10 @@ namespace org.tamrah.islamic.hijri
 		public readonly static int OCTOBER = 9;
 		public readonly static int NOVEMBER = 10;
 		public readonly static int DECEMBER = 11;
+
+		//
+		public readonly static int AM = 0;
+		public readonly static int PM = 1;
 		protected Calendar ()
 		{
 		}	
@@ -76,10 +83,40 @@ namespace org.tamrah.islamic.hijri
 			//
 			DateTime dateTime = DateTime.Now;
 			//
-			values[YEAR] = dateTime.Year;
-			values[MONTH] = dateTime.Month - 1;
-			values[DATE] = dateTime.Day;
+			if(dateTime.Year > 0)
+				calendar.set(ERA, AD);
+			else
+				calendar.set(ERA, BC);
+			//
+			calendar.set(YEAR, dateTime.Year);
+			//
+			calendar.set(MONTH, dateTime.Month - 1);
+			//
+			calendar.set(DATE, dateTime.Day);
+			//
+			calendar.set(DAY_OF_MONTH, dateTime.Day);
+			//DAY_OF_YEAR
+
+			//
+			calendar.set(DAY_OF_WEEK, getDayOfWeek(dateTime.DayOfWeek));
+			//
+			//calendar.set();
+			//
+			calendar.set(MINUTE, dateTime.Minute);
+			calendar.set(SECOND, dateTime.Second);
+			calendar.set(MILLISECOND, dateTime.Millisecond);
+
+
 			return calendar;
+		}
+		//
+
+		public DateTime getTime() {
+			return DateTime.Now;
+		}
+		public void setTime (DateTime DateTime)
+		{
+	//		setTimeInMillis (DateTime.Millisecond ());
 		}
 
 		public int get (int field)
@@ -94,6 +131,27 @@ namespace org.tamrah.islamic.hijri
 			if(field >= FIELD_COUNT)
 				throw new Exception();
 			values[field] = value;
+		}
+
+		//
+		private static int getDayOfWeek (DayOfWeek DayOfWeek)
+		{
+			switch (DayOfWeek) {
+			case System.DayOfWeek.Sunday:
+				return SUNDAY;
+			case System.DayOfWeek.Monday:
+				return MONDAY;
+			case System.DayOfWeek.Tuesday:
+				return TUESDAY;
+			case System.DayOfWeek.Wednesday:
+				return WEDNESDAY;
+			case System.DayOfWeek.Thursday:
+				return THURSDAY;
+			case System.DayOfWeek.Friday:
+				return FRIDAY;
+			default:
+				return SATURDAY;
+			}
 		}
 	}
 }
