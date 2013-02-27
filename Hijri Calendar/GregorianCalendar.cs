@@ -167,6 +167,29 @@ namespace org.tamrah.islamic.hijri
 			case YEAR:
 				set(YEAR, get(YEAR) + amount);
 				break;
+			case MONTH:
+				if(amount > 0){
+					//ADD
+					for(int i = 1; i <= amount; i++)
+					{
+						if(get(MONTH) == DECEMBER){
+							set(MONTH, JANUARY);
+							set(YEAR, get(YEAR) + 1);
+						}else
+							set(MONTH, get (MONTH) + 1);
+					}
+				}else{
+					//MINUS
+					for(int i = 1; i <= (-amount); i++)
+					{
+						if(get(MONTH) == JANUARY){
+							set(MONTH, DECEMBER);
+							set(YEAR, get(YEAR) - 1);
+						}else
+							set(MONTH, get (MONTH) - 1);
+					}
+				}
+				break;
 			}
 		}
 		
