@@ -36,6 +36,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Hijri Calendar\Calendar.cs" />
     <Compile Include="Hijri Calendar\dummy.cs" />
+    <Compile Include="Hijri Calendar\GregorianCalendar.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

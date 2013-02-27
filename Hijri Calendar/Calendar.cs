@@ -2,7 +2,7 @@ using System;
 
 namespace org.tamrah.islamic.hijri
 {
-	public class Calendar
+	public abstract class Calendar
 	{
 		//
 		public readonly static int ERA = 0;
@@ -42,7 +42,7 @@ namespace org.tamrah.islamic.hijri
 		public readonly static int FIELD_COUNT = 17;
 
 		//Used to store Date ERA, YEAR, MONTH ..... DST_OFFSET
-		private int[] values = new int[FIELD_COUNT];
+		internal int[] values = new int[FIELD_COUNT];
 
 		//ERAs
 		public readonly static int BC = 0;
@@ -74,66 +74,59 @@ namespace org.tamrah.islamic.hijri
 		//
 		public readonly static int AM = 0;
 		public readonly static int PM = 1;
-		protected Calendar ()
+		
+		internal Calendar ()
 		{
 		}	
-		public static Calendar getInstance ()
+		public static Calendar getInstance()
 		{
-			Calendar calendar = new Calendar() ;
-			//
-			DateTime dateTime = DateTime.Now;
-			//
-			if(dateTime.Year > 0)
-				calendar.set(ERA, AD);
-			else
-				calendar.set(ERA, BC);
-			//
-			calendar.set(YEAR, dateTime.Year);
-			//
-			calendar.set(MONTH, dateTime.Month - 1);
-			//
-			calendar.set(DATE, dateTime.Day);
-			//
-			calendar.set(DAY_OF_MONTH, dateTime.Day);
-			//DAY_OF_YEAR
-
-			//
-			calendar.set(DAY_OF_WEEK, getDayOfWeek(dateTime.DayOfWeek));
-			//
-			//calendar.set();
-			//
-			calendar.set(MINUTE, dateTime.Minute);
-			calendar.set(SECOND, dateTime.Second);
-			calendar.set(MILLISECOND, dateTime.Millisecond);
-
-			return calendar;
+			return new GregorianCalendar();
 		}
 		//
 
 		public DateTime getTime() {
-			return DateTime.Now;
+			return Convert.ToDateTime(get (MILLISECOND));
 		}
 		public void setTime (DateTime DateTime)
 		{
-	//		setTimeInMillis (DateTime.Millisecond ());
+			set(MILLISECOND, DateTime.Millisecond);
 		}
 
-		public int get (int field)
+		public virtual void add(int field, int amount){
+
+		}
+
+		public int get(int field)
 		{
 			if(field >= FIELD_COUNT)
 				throw new Exception();
 			return values[field];
 		}
 
-		public void set (int field, int value)
+		public void set(int field, int value)
 		{
 			if(field >= FIELD_COUNT)
 				throw new Exception();
 			values[field] = value;
 		}
 
+		public virtual int getMaximum(int field)
+		{
+			return 0;
+		}
+
+		public virtual int getMinimum(int field)
+		{
+			return 0;
+		}
+
+		public virtual int getActualMaximum(int field)
+		{
+			return 0;
+		}
+
 		//
-		private static int getDayOfWeek (DayOfWeek DayOfWeek)
+		internal static int getDayOfWeek (DayOfWeek DayOfWeek)
 		{
 			switch (DayOfWeek) {
 			case System.DayOfWeek.Sunday:
