@@ -106,7 +106,6 @@ namespace org.tamrah.islamic.hijri
 			calendar.set(SECOND, dateTime.Second);
 			calendar.set(MILLISECOND, dateTime.Millisecond);
 
-
 			return calendar;
 		}
 		//
