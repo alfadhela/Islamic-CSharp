@@ -161,7 +161,13 @@ namespace org.tamrah.islamic.hijri
 
 		public override void add(int field, int amount)
 		{
-
+			if(field >= FIELD_COUNT)
+				throw new Exception();
+			switch(field){
+			case YEAR:
+				set(YEAR, get(YEAR) + amount);
+				break;
+			}
 		}
 		
 	}
