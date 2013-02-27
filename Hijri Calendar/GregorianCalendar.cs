@@ -11,10 +11,10 @@ namespace org.tamrah.islamic.hijri
 
 		static readonly int BCE = 0;
 		static readonly int CE = 1;
-		
-		static readonly int[] MONTH_Length
+
+		 static readonly int[] MONTH_Length
 		= {31,28,31,30,31,30,31,31,30,31,30,31}; // 0-based
-		static readonly int[] LEAP_MONTH_Length
+		 static readonly int[] LEAP_MONTH_Length
 		= {31,29,31,30,31,30,31,31,30,31,30,31}; // 0-based
 
 		// Useful millisecond constants.  Although ONE_DAY and ONE_WEEK can fit
@@ -169,6 +169,7 @@ namespace org.tamrah.islamic.hijri
 				break;
 			case MONTH:
 				if(amount > 0){
+					Console.WriteLine(get (MONTH));
 					//ADD
 					for(int i = 1; i <= amount; i++)
 					{
@@ -187,12 +188,49 @@ namespace org.tamrah.islamic.hijri
 							set(YEAR, get(YEAR) - 1);
 						}else
 							set(MONTH, get (MONTH) - 1);
+
 					}
 				}
 				break;
-			}
+			case DATE:
+				if(isLeapYear(get(YEAR)))
+				{
+					
+					for(int i = 1 ; i  <= amount ; i++)
+					{
+						if(get(DATE)> LEAP_MONTH_Length[get (MONTH)])
+						{
+							set(DATE, get (DATE) + 1);
+							
+						} 
+						else
+						{
+							set (DATE,1);
+							add(MONTH, 1);
+						}
+					}
+				}
+				
+				else if(!isLeapYear(get(YEAR)))
+				{
+					for(int i = 1 ; i  <= amount ; i++)
+					{
+						if(get(DATE)> MONTH_Length[get(MONTH)])
+						{
+							set(DATE, get (DATE) + 1);
+							
+						} 
+						else
+						{
+							set (DATE,1);
+							add(MONTH, 1);
+						}
+					}
+				}
+				break;
 		}
 		
 	}
+}
 }
 

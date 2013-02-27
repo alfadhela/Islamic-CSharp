@@ -14,7 +14,7 @@ namespace HijraCalendar
 			calendar.set(Calendar.YEAR, 2012);
 			Console.WriteLine(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DATE));
 
-			calendar.add(Calendar.MONTH, -5);
+			calendar.add(Calendar.DATE,52);
 			Console.WriteLine(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DATE));
 		}
 	}
