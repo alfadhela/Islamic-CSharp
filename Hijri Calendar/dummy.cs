@@ -11,18 +11,21 @@ namespace HijraCalendar
 		
 			/*
 			Calendar calendar = Calendar.getInstance ();
+			calendar.add(Calendar.DATE,52);
 
-
-			calendar.set (Calendar.YEAR, datetime.Year);
-			calendar.set (Calendar.MONTH, datetime.Month);
-			calendar.set (Calendar.DATE, datetime.Day);
 
 			Console.WriteLine (calendar.get (Calendar.YEAR) + "-" + calendar.get (Calendar.MONTH) + "-" + calendar.get (Calendar.DATE));
-         */
 
+			Console.WriteLine (calendar.get (Calendar.YEAR) + "-" + calendar.get (Calendar.MONTH) + "-" + calendar.get (Calendar.DATE));
+
+
+          */
 			HijriCalendar calendar = new HijriCalendar();
 
 			Console.WriteLine (calendar.get (Calendar.YEAR) + "-" + calendar.get (Calendar.MONTH) + "-" + calendar.get (Calendar.DATE));
+			calendar.add(Calendar.DATE,-18);
+			Console.WriteLine (calendar.get (Calendar.YEAR) + "-" + calendar.get (Calendar.MONTH) + "-" + calendar.get (Calendar.DATE));
+
 
 
 		}

@@ -126,6 +126,140 @@ namespace org.tamrah.islamic.hijri
 				return 1;
 			return 0;
 		}
+
+		public override void add(int field, int amount)
+		{
+			if(field >= FIELD_COUNT)
+				throw new Exception();
+			switch (field) {
+			case YEAR:
+				set (YEAR, get (YEAR) + amount);
+				break;
+			case MONTH:
+				if (amount > 0) {
+					//ADD
+					for (int i = 1; i <= amount; i++) {
+						if (get (MONTH) == 11) {
+							set (MONTH, 0);
+							set (YEAR, get (YEAR) + 1);
+						} else
+							set (MONTH, get (MONTH) + 1);
+					}
+					//MINUS
+				} else {
+					for (int i = 1; i <= (-amount); i++) {
+						if (get (MONTH) == 0) {
+							set (MONTH, 12);
+							set (YEAR, get (YEAR) - 1);
+						} else
+							set (MONTH, get (MONTH) - 1);
+						
+					}
+				}
+				break;
+			case DATE:
+				if (amount > 0 )
+				{
+					//ADD
+						for(int i = 1 ; i  <= amount ; i++)
+						{
+						if(get(DATE)< getHijriMonthDays(get(YEAR),get(MONTH)))
+							{
+								set(DATE, get (DATE) + 1);
+								
+							} 
+							else
+							{
+								set (DATE,1);
+								add(MONTH, 1);
+								
+							}
+						}
+					}
+
+				else
+					//MINUS
+				{
+						
+						for(int i = 1 ; i  <= (-amount) ; i++)
+						{
+						if(get(DATE)<= getHijriMonthDays(get(YEAR),get(MONTH)) && get(DATE) > 0)
+							{
+								set(DATE, get (DATE) - 1);
+								
+							} 
+							else
+							{
+								add(MONTH, -1);
+							set (DATE,getHijriMonthDays(get(YEAR),get(MONTH)));
+								
+								
+							}
+						}
+
+				}
+				break;
+			}
+		}
+		/*
+		public int getMaximum(int field) {
+			int ret = 0;
+			switch (field) {
+			case DAY_OF_MONTH:
+				ret = 30;
+				break;
+			case DAY_OF_WEEK:
+				ret = 7;
+			case MONTH:
+				ret = 12;
+				break;
+			case YEAR:
+				ret = 9999;
+				break;
+				//		case ERA:
+				//			ret = AH;
+				//			break;
+			}
+			return ret;
+		}
+		public int getMinimum(int field) {
+			int ret = 0;
+			switch (field) {
+			case DAY_OF_MONTH:
+			case DAY_OF_WEEK:
+			case MONTH:
+				ret = 1;
+				break;
+			case YEAR:
+				ret = 0;
+				break;
+				//		case ERA:
+				//			ret = BH;
+			}
+			return ret;
+		}
+
+		public int getActualMaximum(int field) {
+			int ret = 0;
+			switch (field) {
+			case DAY_OF_MONTH:
+				ret = getHijriMonthDays(get(MONTH), get(YEAR));
+				break;
+			case DAY_OF_WEEK:
+				ret = 7;
+			case MONTH:
+				ret = 12;
+				break;
+			case YEAR:
+				ret = 9999;
+				break;
+				//		case ERA:
+				//			ret = AH;
+				//			break;
+			}
+			return ret;
+	}
+*/
 	}
 }
 
