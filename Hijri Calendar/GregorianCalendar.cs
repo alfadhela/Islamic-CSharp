@@ -169,7 +169,6 @@ namespace org.tamrah.islamic.hijri
 				break;
 			case MONTH:
 				if(amount > 0){
-					Console.WriteLine(get (MONTH));
 					//ADD
 					for(int i = 1; i <= amount; i++)
 					{
@@ -193,20 +192,24 @@ namespace org.tamrah.islamic.hijri
 				}
 				break;
 			case DATE:
+				if (amount > 0 )
+				{
+					//ADD
 				if(isLeapYear(get(YEAR)))
 				{
 					
 					for(int i = 1 ; i  <= amount ; i++)
 					{
-						if(get(DATE)> LEAP_MONTH_Length[get (MONTH)])
+						if(get(DATE)< LEAP_MONTH_Length[get (MONTH)])
 						{
 							set(DATE, get (DATE) + 1);
-							
+
 						} 
 						else
 						{
 							set (DATE,1);
 							add(MONTH, 1);
+
 						}
 					}
 				}
@@ -215,22 +218,72 @@ namespace org.tamrah.islamic.hijri
 				{
 					for(int i = 1 ; i  <= amount ; i++)
 					{
-						if(get(DATE)> MONTH_Length[get(MONTH)])
+						if(get(DATE)< MONTH_Length[get(MONTH)])
 						{
 							set(DATE, get (DATE) + 1);
-							
+
 						} 
 						else
 						{
 							set (DATE,1);
 							add(MONTH, 1);
+
+						}
+					}
+				}
+				}
+				else
+					//MINUS
+				{
+					if(isLeapYear(get(YEAR)))
+					{
+						
+						for(int i = 1 ; i  <= (-amount) ; i++)
+						{
+							if(get(DATE)<= LEAP_MONTH_Length[get (MONTH)] && get(DATE) > 0)
+							{
+								set(DATE, get (DATE) - 1);
+
+							} 
+							else
+							{
+								add(MONTH, -1);
+								set (DATE,LEAP_MONTH_Length[get (MONTH)]);
+
+							    
+							}
+						}
+					}
+					else 
+					{
+						if(!isLeapYear(get(YEAR)))
+						{
+							
+							for(int i = 1 ; i  <= (-amount) ; i++)
+							{
+								if(get(DATE)<= MONTH_Length[get (MONTH)] && get(DATE) > 0)
+								{
+									set(DATE, get (DATE) - 1);
+									
+								} 
+								else
+								{
+									add(MONTH,-1);
+									set (DATE,MONTH_Length[get (MONTH)]);
+
+									
+								}
+							}
 						}
 					}
 				}
 				break;
 		}
 		
+	}//end method add
+
+
+
 	}
-}
 }
 

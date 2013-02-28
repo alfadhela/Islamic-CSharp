@@ -8,14 +8,23 @@ namespace HijraCalendar
 
 		public static void Main ()
 		{
-			Calendar calendar = Calendar.getInstance();
-			Console.WriteLine(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DATE));
+		
+			/*
+			Calendar calendar = Calendar.getInstance ();
 
-			calendar.set(Calendar.YEAR, 2012);
-			Console.WriteLine(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DATE));
 
-			calendar.add(Calendar.DATE,52);
-			Console.WriteLine(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DATE));
+			calendar.set (Calendar.YEAR, datetime.Year);
+			calendar.set (Calendar.MONTH, datetime.Month);
+			calendar.set (Calendar.DATE, datetime.Day);
+
+			Console.WriteLine (calendar.get (Calendar.YEAR) + "-" + calendar.get (Calendar.MONTH) + "-" + calendar.get (Calendar.DATE));
+         */
+
+			HijriCalendar calendar = new HijriCalendar();
+
+			Console.WriteLine (calendar.get (Calendar.YEAR) + "-" + calendar.get (Calendar.MONTH) + "-" + calendar.get (Calendar.DATE));
+
+
 		}
 	}
 }
