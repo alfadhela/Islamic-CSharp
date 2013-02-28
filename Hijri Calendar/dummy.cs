@@ -9,22 +9,24 @@ namespace HijraCalendar
 		public static void Main ()
 		{
 		
-			/*
+			String[] weekDays = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
+
 			Calendar calendar = Calendar.getInstance ();
+
+
+
+			Console.WriteLine ( weekDays[calendar.get (Calendar.DAY_OF_WEEK)] + ", " +calendar.get (Calendar.YEAR) + "-" + calendar.get (Calendar.MONTH) + "-" + calendar.get (Calendar.DATE));
+
 			calendar.add(Calendar.DATE,52);
+			Console.WriteLine ( weekDays[calendar.get (Calendar.DAY_OF_WEEK)] + ", " +calendar.get (Calendar.YEAR) + "-" + calendar.get (Calendar.MONTH) + "-" + calendar.get (Calendar.DATE));
 
+			Console.WriteLine ("Hijra Calendar");
 
-			Console.WriteLine (calendar.get (Calendar.YEAR) + "-" + calendar.get (Calendar.MONTH) + "-" + calendar.get (Calendar.DATE));
+			org.tamrah.islamic.hijri.HijraCalendar hCalendar = org.tamrah.islamic.hijri.HijraCalendar.getInstance();
 
-			Console.WriteLine (calendar.get (Calendar.YEAR) + "-" + calendar.get (Calendar.MONTH) + "-" + calendar.get (Calendar.DATE));
-
-
-          */
-			HijriCalendar calendar = new HijriCalendar();
-
-			Console.WriteLine (calendar.get (Calendar.YEAR) + "-" + calendar.get (Calendar.MONTH) + "-" + calendar.get (Calendar.DATE));
-			calendar.add(Calendar.DATE,-18);
-			Console.WriteLine (calendar.get (Calendar.YEAR) + "-" + calendar.get (Calendar.MONTH) + "-" + calendar.get (Calendar.DATE));
+			Console.WriteLine ( weekDays[hCalendar.get (Calendar.DAY_OF_WEEK)] + ", " + hCalendar.get (Calendar.YEAR) + "-" + hCalendar.get (Calendar.MONTH) + "-" + hCalendar.get (Calendar.DATE));
+			hCalendar.add(Calendar.DATE,-18);
+			Console.WriteLine ( weekDays[hCalendar.get (Calendar.DAY_OF_WEEK)] + ", " +hCalendar.get (Calendar.YEAR) + "-" + hCalendar.get (Calendar.MONTH) + "-" + hCalendar.get (Calendar.DATE));
 
 
 
