@@ -49,13 +49,13 @@ namespace org.tamrah.islamic.hijri
 		public const int AD = 1;
 
 		//DAYS
-		public const int SUNDAY = 1;
-		public const int MONDAY = 2;
-		public const int TUESDAY = 3;
-		public const int WEDNESDAY = 4;
-		public const int THURSDAY = 5;
-		public const int FRIDAY = 6;
-		public const int SATURDAY = 7;
+		public const int SUNDAY = 0;
+		public const int MONDAY = 1;
+		public const int TUESDAY = 2;
+		public const int WEDNESDAY = 3;
+		public const int THURSDAY = 4;
+		public const int FRIDAY = 5;
+		public const int SATURDAY = 6;
 
 		//MONTHS
 		public const int JANUARY = 0;

@@ -132,8 +132,44 @@ namespace org.tamrah.islamic.hijri
 
 		public GregorianCalendar ()
 		{
-			//
 			DateTime dateTime = DateTime.Now;
+			setFromDateTime (dateTime);
+		}
+
+		public override void add(int field, int amount)
+		{
+			if(field >= FIELD_COUNT)
+				throw new Exception();
+			DateTime dt = new DateTime (get(YEAR),get(MONTH)+1,get(DATE),get(HOUR),get(MINUTE),get(SECOND));
+
+			switch(field){
+			case YEAR:
+				dt = dt.AddYears(amount);
+				break;
+			case MONTH:
+				dt = dt.AddMonths(amount);
+				break;
+			case DATE:
+				dt = dt.AddDays(amount);
+				break;
+			case DAY_OF_YEAR:
+				dt = dt.AddDays(amount);
+				break;
+			case HOUR:
+				dt = dt.AddHours(amount);
+				break;
+			case MINUTE:
+				dt = dt.AddMinutes(amount);
+				break;
+			case SECOND:
+				dt = dt.AddSeconds(amount);
+				break;
+			}
+			setFromDateTime (dt);
+		}
+
+		private void setFromDateTime(DateTime dateTime)
+		{
 			//
 			if(dateTime.Year > 0)
 				set(ERA, AD);
@@ -148,141 +184,15 @@ namespace org.tamrah.islamic.hijri
 			//
 			set(DAY_OF_MONTH, dateTime.Day);
 			//DAY_OF_YEAR
-
+			set(DAY_OF_YEAR, dateTime.DayOfYear);
 			//
 			set(DAY_OF_WEEK, getDayOfWeek(dateTime.DayOfWeek));
 			//
-			//calendar.set();
-			//
+			set(HOUR, dateTime.Hour);
 			set(MINUTE, dateTime.Minute);
 			set(SECOND, dateTime.Second);
 			set(MILLISECOND, dateTime.Millisecond);
 		}
-
-		public override void add(int field, int amount)
-		{
-			if(field >= FIELD_COUNT)
-				throw new Exception();
-			switch(field){
-			case YEAR:
-				set(YEAR, get(YEAR) + amount);
-				break;
-			case MONTH:
-				if(amount > 0){
-					//ADD
-					for(int i = 1; i <= amount; i++)
-					{
-						if(get(MONTH) == DECEMBER){
-							set(MONTH, JANUARY);
-							set(YEAR, get(YEAR) + 1);
-						}else
-							set(MONTH, get (MONTH) + 1);
-					}
-				}else{
-					//MINUS
-					for(int i = 1; i <= (-amount); i++)
-					{
-						if(get(MONTH) == JANUARY){
-							set(MONTH, DECEMBER);
-							set(YEAR, get(YEAR) - 1);
-						}else
-							set(MONTH, get (MONTH) - 1);
-
-					}
-				}
-				break;
-			case DATE:
-				if (amount > 0 )
-				{
-					//ADD
-				if(isLeapYear(get(YEAR)))
-				{
-					
-					for(int i = 1 ; i  <= amount ; i++)
-					{
-						if(get(DATE)< LEAP_MONTH_Length[get (MONTH)])
-						{
-							set(DATE, get (DATE) + 1);
-
-						} 
-						else
-						{
-							set (DATE,1);
-							add(MONTH, 1);
-
-						}
-					}
-				}
-				
-				else if(!isLeapYear(get(YEAR)))
-				{
-					for(int i = 1 ; i  <= amount ; i++)
-					{
-						if(get(DATE)< MONTH_Length[get(MONTH)])
-						{
-							set(DATE, get (DATE) + 1);
-
-						} 
-						else
-						{
-							set (DATE,1);
-							add(MONTH, 1);
-
-						}
-					}
-				}
-				}
-				else
-					//MINUS
-				{
-					if(isLeapYear(get(YEAR)))
-					{
-						
-						for(int i = 1 ; i  <= (-amount) ; i++)
-						{
-							if(get(DATE)<= LEAP_MONTH_Length[get (MONTH)] && get(DATE) > 0)
-							{
-								set(DATE, get (DATE) - 1);
-
-							} 
-							else
-							{
-								add(MONTH, -1);
-								set (DATE,LEAP_MONTH_Length[get (MONTH)]);
-
-							    
-							}
-						}
-					}
-					else 
-					{
-						if(!isLeapYear(get(YEAR)))
-						{
-							
-							for(int i = 1 ; i  <= (-amount) ; i++)
-							{
-								if(get(DATE)<= MONTH_Length[get (MONTH)] && get(DATE) > 0)
-								{
-									set(DATE, get (DATE) - 1);
-									
-								} 
-								else
-								{
-									add(MONTH,-1);
-									set (DATE,MONTH_Length[get (MONTH)]);
-
-									
-								}
-							}
-						}
-					}
-				}
-				break;
-		}
-		
-	}//end method add
-
-
 
 	}
 }
