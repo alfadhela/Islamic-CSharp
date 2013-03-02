@@ -10,9 +10,79 @@ namespace org.tamrah.islamic.hijri
 		//Julian 0622-7-16 = gregorian 0759-6-11 (I think it should be 622, 7, 19)
 		public const int HIJRI_EPOCH = 227015;
 		
-		//	public static HijraCalendar getInstance(){
-		//	return new HijraCalendar(Calendar.getInstance());
+		/**
+     * Value of the {@link #MONTH} field indicating the
+     * first month of the year in the Hijri calendar.
+     */
+		public const int MUHARRAM = 1;
 		
+		/**
+     * Value of the {@link #MONTH} field indicating the
+     * second month of the year in the Hijri calendar.
+     */
+		public const int SAFAR = 2;
+		
+		/**
+     * Value of the {@link #MONTH} field indicating the
+     * third month of the year in the Hijri calendars.
+     */
+		public const int RABI_I = 3;
+		
+		/**
+     * Value of the {@link #MONTH} field indicating the
+     * fourth month of the year in the Hijri calendar.
+     */
+		public const int RABI_II = 4;
+		
+		/**
+     * Value of the {@link #MONTH} field indicating the
+     * fifth month of the year in the Hijri calendar.
+     */
+		public const int JUMADA_I = 5;
+		
+		/**
+     * Value of the {@link #MONTH} field indicating the
+     * sixth month of the year in the Hijri calendar.
+     */
+		public const int JUMADA_II = 6;
+		
+		/**
+     * Value of the {@link #MONTH} field indicating the
+     * seventh month of the year in the Hijri calendar.
+     */
+		public const int RAJAB = 7;
+		
+		/**
+     * Value of the {@link #MONTH} field indicating the
+     * eighth month of the year in the Hijri calendar.
+     */
+		public const int SHAABAN = 8;
+		
+		/**
+     * Value of the {@link #MONTH} field indicating the
+     * ninth month of the year in the Hijri calendar.
+     */
+		public const int RAMADAN = 9;
+		
+		/**
+     * Value of the {@link #MONTH} field indicating the
+     * tenth month of the year in the Hijri calendar.
+     */
+		public const int SHAWWAL = 10;
+		
+		/**
+     * Value of the {@link #MONTH} field indicating the
+     * eleventh month of the year in the Hijri calendar.
+     */
+		public const int DHU_AL_QIDAH = 11;
+		
+		/**
+     * Value of the {@link #MONTH} field indicating the
+     * twelfth month of the year in the Hijri calendar.
+     */
+		public const int DHU_AL_HIJJAH = 12;
+		
+		/**
 		
 		public HijriCalendar ()
 		{
@@ -129,99 +199,60 @@ namespace org.tamrah.islamic.hijri
 
 		public override void add(int field, int amount)
 		{
-			if(field >= FIELD_COUNT)
-				throw new Exception();
-			switch (field) {
+			DateTime dt = new DateTime (get(YEAR),get(MONTH)+1,get(DATE),get(HOUR),get(MINUTE),get(SECOND));
+			
+			switch(field){
 			case YEAR:
-				set (YEAR, get (YEAR) + amount);
+				dt = dt.AddYears(amount);
 				break;
 			case MONTH:
-				if (amount > 0) {
-					//ADD
-					for (int i = 1; i <= amount; i++) {
-						if (get (MONTH) == 11) {
-							set (MONTH, 0);
-							set (YEAR, get (YEAR) + 1);
-						} else
-							set (MONTH, get (MONTH) + 1);
-					}
-					//MINUS
-				} else {
-					for (int i = 1; i <= (-amount); i++) {
-						if (get (MONTH) == 0) {
-							set (MONTH, 12);
-							set (YEAR, get (YEAR) - 1);
-						} else
-							set (MONTH, get (MONTH) - 1);
-						
-					}
-				}
+				dt = dt.AddMonths(amount);
 				break;
 			case DATE:
-				if (amount > 0 )
-				{
-					//ADD
-						for(int i = 1 ; i  <= amount ; i++)
-						{
-						if(get(DATE)< getHijriMonthDays(get(YEAR),get(MONTH)))
-							{
-								set(DATE, get (DATE) + 1);
-								
-							} 
-							else
-							{
-								set (DATE,1);
-								add(MONTH, 1);
-								
-							}
-						}
-					}
-
-				else
-					//MINUS
-				{
-						
-						for(int i = 1 ; i  <= (-amount) ; i++)
-						{
-						if(get(DATE)<= getHijriMonthDays(get(YEAR),get(MONTH)) && get(DATE) > 0)
-							{
-								set(DATE, get (DATE) - 1);
-								
-							} 
-							else
-							{
-								add(MONTH, -1);
-							set (DATE,getHijriMonthDays(get(YEAR),get(MONTH)));
-								
-								
-							}
-						}
-
-				}
+				dt = dt.AddDays(amount);
+				break;
+			case DAY_OF_YEAR:
+				dt = dt.AddDays(amount);
+				break;
+			case HOUR:
+				dt = dt.AddHours(amount);
+				break;
+			case MINUTE:
+				dt = dt.AddMinutes(amount);
+				break;
+			case SECOND:
+				dt = dt.AddSeconds(amount);
 				break;
 			}
+			setFromDateTime (dt);
 		}
-		/*
-		public int getMaximum(int field) {
-			int ret = 0;
-			switch (field) {
-			case DAY_OF_MONTH:
-				ret = 30;
-				break;
-			case DAY_OF_WEEK:
-				ret = 7;
-			case MONTH:
-				ret = 12;
-				break;
-			case YEAR:
-				ret = 9999;
-				break;
-				//		case ERA:
-				//			ret = AH;
-				//			break;
-			}
-			return ret;
+
+		private void setFromDateTime(DateTime dateTime)
+		{
+			//
+			if(dateTime.Year > 0)
+				set(ERA, AD);
+			else
+				set(ERA, BC);
+			//
+			set(YEAR, dateTime.Year);
+			//
+			set(MONTH, dateTime.Month - 1);
+			//
+			set(DATE, dateTime.Day);
+			//
+			set(DAY_OF_MONTH, dateTime.Day);
+			//DAY_OF_YEAR
+			set(DAY_OF_YEAR, dateTime.DayOfYear);
+			//
+			set(DAY_OF_WEEK, getDayOfWeek(dateTime.DayOfWeek));
+			//
+			set(HOUR, dateTime.Hour);
+			set(MINUTE, dateTime.Minute);
+			set(SECOND, dateTime.Second);
+			set(MILLISECOND, dateTime.Millisecond);
 		}
+	/*
 		public int getMinimum(int field) {
 			int ret = 0;
 			switch (field) {
@@ -259,7 +290,7 @@ namespace org.tamrah.islamic.hijri
 			}
 			return ret;
 	}
-*/
+    */
 	}
 }
 
