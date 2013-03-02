@@ -7,16 +7,16 @@ namespace org.tamrah.islamic.hijri
 	public class GregorianCalendar : Calendar
 	{
 		private static readonly int EPOCH_OFFSET   = 719163; // Fixed date of January 1, 1970 (Gregorian)
-		private static readonly int EPOCH_YEAR     = 1970;
+//		private static readonly int EPOCH_YEAR     = 1970;
 
 		static readonly int BCE = 0;
 		static readonly int CE = 1;
-
+		/*
 		 static readonly int[] MONTH_Length
 		= {31,28,31,30,31,30,31,31,30,31,30,31}; // 0-based
 		 static readonly int[] LEAP_MONTH_Length
 		= {31,29,31,30,31,30,31,31,30,31,30,31}; // 0-based
-
+       */
 		// Useful millisecond constants.  Although ONE_DAY and ONE_WEEK can fit
 		// into ints, they must be longs in order to prevent arithmetic overflow
 		// when performing (bug 4173516).
@@ -24,7 +24,7 @@ namespace org.tamrah.islamic.hijri
 		private static readonly int  ONE_MINUTE = 60*ONE_SECOND;
 		private static readonly int  ONE_HOUR   = 60*ONE_MINUTE;
 		private static readonly long ONE_DAY    = 24*ONE_HOUR;
-		private static readonly long ONE_WEEK   = 7*ONE_DAY;
+//		private static readonly long ONE_WEEK   = 7*ONE_DAY;
 
 		static readonly int[] MIN_VALUES = {
 			BCE,            // ERA
@@ -193,6 +193,21 @@ namespace org.tamrah.islamic.hijri
 			set(SECOND, dateTime.Second);
 			set(MILLISECOND, dateTime.Millisecond);
 		}
+		public override int getMaximum(int field)
+		{
+			return isLeapYear(get(YEAR))?LEAST_MAX_VALUES[field]:MAX_VALUES[field];
+		}
+		
+		public override int getMinimum(int field)
+		{
+			return MIN_VALUES [field];
+		}
+		
+		public override int getActualMaximum(int field)
+		{
+			return getMaximum(field);
+		}
+
 
 	}
 }
