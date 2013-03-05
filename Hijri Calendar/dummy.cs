@@ -39,6 +39,13 @@ namespace HijraCalendar
 
 
 
+
+			UmmALQura UmmALQuraCalendar = new UmmALQura ();
+			Console.WriteLine ("UmmALQura Calendar");
+			Console.WriteLine ( weekDays[UmmALQuraCalendar.get (Calendar.DAY_OF_WEEK)] + ", " + UmmALQuraCalendar.get (Calendar.YEAR) + "-" + UmmALQuraCalendar.get (Calendar.MONTH) + "-" + UmmALQuraCalendar.get (Calendar.DATE));
+
+		
+
 		}
 	}
 }
