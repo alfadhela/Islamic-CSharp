@@ -82,19 +82,24 @@ namespace org.tamrah.islamic.hijri
      * twelfth month of the year in the Hijri calendar.
      */
 		public const int DHU_AL_HIJJAH = 12;
-		
-		public  UmmALQura()
+
+		public static UmmALQura getInstance(){
+			return new UmmALQura (Calendar.getInstance());
+		}
+		//calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH)));
+		public  UmmALQura(Calendar calendar)
 		{
-			int a1 = 1;
-			int a2 = 1;
-			int a3 = 1;
-			int a4 = 1;
+			int yh = 0;
+			int mh = 0;
+			int dh = 0;
+			int dayweek = 0;
 			DateTime dt = DateTime.Now;
-			GregorianToHijri(dt.Year, dt.Month, dt.Day, out a1, out a2, out a3,out a4);
-			set (YEAR, a1);
-			set (MONTH, a2);
-			set (DATE, a3);
-			set (DAY_OF_WEEK, a4);
+	    	GregorianToHijri(dt.Year,dt.Month,dt.Day, out yh, out mh, out dh,out dayweek);
+			set (YEAR, yh);
+			set (MONTH, mh);
+			set (DATE, dh);
+			set (DAY_OF_WEEK, dayweek);
+
 		}
 
         public static bool GregorianToHijri(int yg, int mg, int dg, out int yh, out int mh, out int dh, out int dayweek)
@@ -987,5 +992,66 @@ double T1,T2,Tr;
     JDToMSCalend(SJD,ref ys,ref ms,ref ds);
 
 }
+
+
+		////////////////////////ADD ////////////////
+
+		public override void add(int field, int amount)
+		{
+			if(field >= FIELD_COUNT)
+				throw new Exception();
+			DateTime dt = new DateTime (get(YEAR),get(MONTH)+1,get(DATE),get(HOUR),get(MINUTE),get(SECOND));
+			
+			switch(field){
+			case YEAR:
+				dt = dt.AddYears(amount);
+				break;
+			case MONTH:
+				dt = dt.AddMonths(amount);
+				break;
+			case DATE:
+				dt = dt.AddDays(amount);
+				break;
+			case DAY_OF_YEAR:
+				dt = dt.AddDays(amount);
+				break;
+			case HOUR:
+				dt = dt.AddHours(amount);
+				break;
+			case MINUTE:
+				dt = dt.AddMinutes(amount);
+				break;
+			case SECOND:
+				dt = dt.AddSeconds(amount);
+				break;
+			}
+			setFromDateTime (dt);
+		}
+		
+		private void setFromDateTime(DateTime dateTime)
+		{
+			//
+			if(dateTime.Year > 0)
+				set(ERA, AD);
+			else
+				set(ERA, BC);
+			//
+			set(YEAR, dateTime.Year);
+			//
+			set(MONTH, dateTime.Month - 1);
+			//
+			set(DATE, dateTime.Day);
+			//
+			set(DAY_OF_MONTH, dateTime.Day);
+			//DAY_OF_YEAR
+			set(DAY_OF_YEAR, dateTime.DayOfYear);
+			//
+			set(DAY_OF_WEEK, getDayOfWeek(dateTime.DayOfWeek));
+			//
+			set(HOUR, dateTime.Hour);
+			set(MINUTE, dateTime.Minute);
+			set(SECOND, dateTime.Second);
+			set(MILLISECOND, dateTime.Millisecond);
+		}
 
     }}

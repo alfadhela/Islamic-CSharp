@@ -8,6 +8,7 @@ namespace HijraCalendar
 
 		public static void Main ()
 		{
+
 		
 			String[] weekDays = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 
@@ -38,13 +39,17 @@ namespace HijraCalendar
 			Console.WriteLine ( weekDays[hCalendar.get (Calendar.DAY_OF_WEEK)] + ", " +hCalendar.get (Calendar.YEAR) + "-" + hCalendar.get (Calendar.MONTH) + "-" + hCalendar.get (Calendar.DATE));
 
 
-
-
-			UmmALQura UmmALQuraCalendar = new UmmALQura ();
+			org.tamrah.islamic.hijri.UmmALQura UmmALQuraCalendar = org.tamrah.islamic.hijri.UmmALQura.getInstance();
 			Console.WriteLine ("UmmALQura Calendar");
 			Console.WriteLine ( weekDays[UmmALQuraCalendar.get (Calendar.DAY_OF_WEEK)] + ", " + UmmALQuraCalendar.get (Calendar.YEAR) + "-" + UmmALQuraCalendar.get (Calendar.MONTH) + "-" + UmmALQuraCalendar.get (Calendar.DATE));
+			UmmALQuraCalendar.add (Calendar.YEAR, 1);
+			Console.WriteLine ( weekDays[UmmALQuraCalendar.get (Calendar.DAY_OF_WEEK)] + ", " + UmmALQuraCalendar.get (Calendar.YEAR) + "-" + UmmALQuraCalendar.get (Calendar.MONTH) + "-" + UmmALQuraCalendar.get (Calendar.DATE));
 
+			UmmALQuraCalendar.add (Calendar.MONTH, 1);
+			Console.WriteLine ( weekDays[UmmALQuraCalendar.get (Calendar.DAY_OF_WEEK)] + ", " + UmmALQuraCalendar.get (Calendar.YEAR) + "-" + UmmALQuraCalendar.get (Calendar.MONTH) + "-" + UmmALQuraCalendar.get (Calendar.DATE));
 		
+			UmmALQuraCalendar.add (Calendar.DATE, 7);
+			Console.WriteLine ( weekDays[UmmALQuraCalendar.get (Calendar.DAY_OF_WEEK)] + ", " + UmmALQuraCalendar.get (Calendar.YEAR) + "-" + UmmALQuraCalendar.get (Calendar.MONTH) + "-" + UmmALQuraCalendar.get (Calendar.DATE));
 
 		}
 	}
