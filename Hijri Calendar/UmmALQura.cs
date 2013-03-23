@@ -100,6 +100,7 @@ namespace org.tamrah.islamic.hijri
 			set (DATE, dh);
 			set (DAY_OF_WEEK, dayweek);
 
+
 		}
 
         public static bool GregorianToHijri(int yg, int mg, int dg, out int yh, out int mh, out int dh, out int dayweek)
@@ -993,65 +994,97 @@ double T1,T2,Tr;
 
 }
 
-
-		////////////////////////ADD ////////////////
-
+		//ADD 
 		public override void add(int field, int amount)
 		{
-			if(field >= FIELD_COUNT)
-				throw new Exception();
-			DateTime dt = new DateTime (get(YEAR),get(MONTH)+1,get(DATE),get(HOUR),get(MINUTE),get(SECOND));
-			
-			switch(field){
-			case YEAR:
-				dt = dt.AddYears(amount);
-				break;
-			case MONTH:
-				dt = dt.AddMonths(amount);
-				break;
-			case DATE:
-				dt = dt.AddDays(amount);
+			int yh = 0;
+			int mh = 0;
+			int dh = 0;
+			int dayweekh = 0;
+			int tempY, tempH, tempD, tempW;
+			HijriToGregorian (get(YEAR),get(MONTH),get(DATE),out yh,out mh , out dh , out dayweekh);
+			Calendar CAL = Calendar.getInstance();
+			CAL.set(YEAR,yh);
+			CAL.set(MONTH,mh);
+			CAL.set(DATE,dh);
+			CAL.set(DAY_OF_WEEK,dayweekh);
+			switch (field) {
+			case DAY_OF_MONTH:
+				CAL.add (DAY_OF_MONTH, amount);
+				GregorianToHijri (CAL.get(YEAR),CAL.get(MONTH),CAL.get(DATE),out yh,out mh , out dh , out dayweekh);
+				set(YEAR,yh);
+				set(MONTH,mh);
+				set(DATE,dh);
+				set(DAY_OF_WEEK,dayweekh);
 				break;
 			case DAY_OF_YEAR:
-				dt = dt.AddDays(amount);
+				CAL.add(DAY_OF_YEAR,amount);
+				GregorianToHijri (CAL.get(YEAR),CAL.get(MONTH),CAL.get(DATE),out yh,out mh , out dh , out dayweekh);
+				set(YEAR,yh);
+				set(MONTH,mh);
+				set(DATE,dh);
+				set(DAY_OF_WEEK,dayweekh);
 				break;
-			case HOUR:
-				dt = dt.AddHours(amount);
+		   case MONTH:
+				int monthValue = get(MONTH), yearValue = get(YEAR);
+				if(amount > 0){
+					//plus: add more months.
+					for(int i = 0; i < amount; i++){
+						if(get(MONTH)+i < DHU_AL_HIJJAH){
+							monthValue = get(MONTH)+1;
+						}else{
+							monthValue = 1;
+							yearValue = get(YEAR)+1;
+						}
+						HijriToGregorian (yearValue,monthValue,get(DATE),out yh,out mh , out dh , out dayweekh);
+						CAL.set(YEAR,yh);
+						CAL.set(MONTH,mh);
+						CAL.set(DATE,dh);
+						CAL.set(DAY_OF_WEEK,dayweekh);
+						GregorianToHijri (CAL.get(YEAR),CAL.get(MONTH),CAL.get(DATE),out tempY,out tempH , out tempD , out tempW);
+						set(YEAR,tempY);
+						set(MONTH,tempH);
+						set(DATE,tempD);
+						set(DAY_OF_WEEK,tempW);
+					}
+				}else if(amount < 0){
+					//minus: remove months.
+					for(int i = 1; i <= -amount; i++){
+						if(get(MONTH)-i < 1){
+							monthValue = DHU_AL_HIJJAH;
+							yearValue = get(YEAR)-1;
+						}else{
+							monthValue = get(MONTH)-1;
+						}
+						HijriToGregorian (yearValue,monthValue,get(DATE),out yh,out mh , out dh , out dayweekh);
+						CAL.set(YEAR,yh);
+						CAL.set(MONTH,mh);
+						CAL.set(DATE,dh);
+						CAL.set(DAY_OF_WEEK,dayweekh);
+						GregorianToHijri (CAL.get(YEAR),CAL.get(MONTH),CAL.get(DATE),out tempY,out tempH , out tempD , out tempW);
+						set(YEAR,tempY);
+						set(MONTH,tempH);
+						set(DATE,tempD);
+						set(DAY_OF_WEEK,tempW);
+					}
+				}
 				break;
-			case MINUTE:
-				dt = dt.AddMinutes(amount);
-				break;
-			case SECOND:
-				dt = dt.AddSeconds(amount);
+			case YEAR:
+				set(YEAR,get(YEAR)+ amount);
+				HijriToGregorian (get(YEAR),get(MONTH),get(DATE),out yh,out mh , out dh , out dayweekh);
+				CAL.set(YEAR,yh);
+				CAL.set(MONTH,mh);
+				CAL.set(DATE,dh);
+				CAL.set(DAY_OF_WEEK,dayweekh);
+				GregorianToHijri (CAL.get(YEAR),CAL.get(MONTH),CAL.get(DATE),out tempY,out tempH , out tempD , out tempW);
+				set(YEAR,tempY);
+				set(MONTH,tempH);
+				set(DATE,tempD);
+				set(DAY_OF_WEEK,tempW);
 				break;
 			}
-			setFromDateTime (dt);
-		}
-		
-		private void setFromDateTime(DateTime dateTime)
-		{
-			//
-			if(dateTime.Year > 0)
-				set(ERA, AD);
-			else
-				set(ERA, BC);
-			//
-			set(YEAR, dateTime.Year);
-			//
-			set(MONTH, dateTime.Month - 1);
-			//
-			set(DATE, dateTime.Day);
-			//
-			set(DAY_OF_MONTH, dateTime.Day);
-			//DAY_OF_YEAR
-			set(DAY_OF_YEAR, dateTime.DayOfYear);
-			//
-			set(DAY_OF_WEEK, getDayOfWeek(dateTime.DayOfWeek));
-			//
-			set(HOUR, dateTime.Hour);
-			set(MINUTE, dateTime.Minute);
-			set(SECOND, dateTime.Second);
-			set(MILLISECOND, dateTime.Millisecond);
 		}
 
-    }}
+
+	}
+}

@@ -58,7 +58,7 @@ namespace org.tamrah.islamic.hijri
 			PM,             // AM_PM
 			11,             // HOUR
 			23,             // HOUR_OF_DAY
-			59,             // MINUTE
+			59,             // MINUTE										
 			59,             // SECOND
 			999,            // MILLISECOND
 			14*ONE_HOUR,    // ZONE_OFFSET
