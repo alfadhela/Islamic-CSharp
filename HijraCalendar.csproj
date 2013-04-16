@@ -39,9 +39,15 @@
     <Compile Include="Hijri Calendar\GregorianCalendar.cs" />
     <Compile Include="Hijri Calendar\HijraCalendar.cs" />
     <Compile Include="Hijri Calendar\UmmALQura.cs" />
+    <Compile Include="Prayer Times\CalculationMethod.cs" />
+    <Compile Include="Prayer Times\JuristicMethod.cs" />
+    <Compile Include="Prayer Times\PrayTime2.cs" />
+    <Compile Include="Prayer Times\PrayTime.cs" />
+    <Compile Include="Prayer Times\testenum.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Hijri Calendar\" />
+    <Folder Include="Prayer Times\" />
   </ItemGroup>
 </Project>

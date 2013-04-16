@@ -8,7 +8,7 @@ namespace HijraCalendar
 
 		public static void Main ()
 		{
-
+			/*
 			String[] weekDays = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 
 			Calendar calendar = Calendar.getInstance ();
@@ -34,7 +34,29 @@ namespace HijraCalendar
 
 			UmmALQuraCalendar.add (Calendar.DATE, 3);
 			Console.WriteLine ( weekDays[UmmALQuraCalendar.get (Calendar.DAY_OF_WEEK)] + ", " + UmmALQuraCalendar.get (Calendar.YEAR) + "-" + UmmALQuraCalendar.get (Calendar.MONTH) + "-" + UmmALQuraCalendar.get (Calendar.DATE));
-		
+
+			*/
+
+			org.tamrah.islamic.Pray.PrayTime p = new org.tamrah.islamic.Pray.PrayTime();
+			double lo = 25;
+			double la = 55;
+			int y = 0 , m = 0 , d = 0 , tz = 0;
+			
+			DateTime cc = DateTime.Now;
+			y = cc.Year;
+			m = cc.Month;
+			d = cc.Day;
+			tz = TimeZone.CurrentTimeZone.GetUtcOffset(new DateTime (y,m,d)).Hours;
+			String [] s ;
+			
+			p.setCalcMethod ( 2 );
+			p . setAsrMethod ( 0 );
+			s = p . getDatePrayerTimes ( y , m , d , lo , la , tz );
+			for(int i = 0 ; i < s.Length ; ++i )
+			{
+				Console . WriteLine ( s [ i ] );
+			}
+				
 		}
 	}
 	
